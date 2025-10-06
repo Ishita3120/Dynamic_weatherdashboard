@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="weather-dashboard" id="dashboard">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading weather data...</p>
+            </div>
+        </div>
+        <div class="search-container">
+            <input type="text" id="cityInput" placeholder="Enter city name (optional)" />
+            <button onclick="searchCity()">Search</button>
+            <button onclick="getCurrentLocation()">Use My Location</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
