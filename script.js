@@ -110,31 +110,42 @@ function displayWeatherData(data, cityName, country) {
     `;
 
     // Show next 4 days of forecast
+    //i=1 means you are skipping the first day forecast and starting from the next day
     for (let i = 1; i < Math.min(5, daily.time.length); i++) {
+        //daily.timr[i]->date string from the api
+        //toLocaleDateString->ye sirf weekday show karega
         const dateStr = new Date(daily.time[i]).toLocaleDateString(undefined, { weekday: 'short' });
         const dayCode = daily.weather_code[i];
         const forecastInfo = getWeatherDescription(dayCode, 1);
+        //getWeatherDescription->ye function ko us icon mein convert krta hai
         dashboardHTML += `
+
             <div class="forecast-item">
-                <div class="forecast-day">${dateStr}</div>
-                <div>${forecastInfo.icon}</div>
-                <div style="font-size:0.9rem;">${forecastInfo.description}</div>
+                 <div class="forecast-day">${dateStr}</div>
+                 <div>${forecastInfo.icon}</div>
+                 <div style="font-size:0.9rem;">${forecastInfo.description}</div>
                 <div class="forecast-temp"><b>${Math.round(daily.temperature_2m_min[i])}° / ${Math.round(daily.temperature_2m_max[i])}°C</b></div>
             </div>
         `;
+        //upar wala code pura description card banata hai jo dynamic hai banata hai
     }
     dashboardHTML += `</div>`;
-    document.getElementById('dashboard').innerHTML = dashboardHTML;
+    // document.getElementById('dashboard').innerHTML = dashboardHTML;
 }
 
 function displayError(message) {
+    //.innerHTML->us element ya div ke anadar ka pura content replace kr dega oops! msg se
+    //jis element ka id 'dashboard' hai vahan oops msg display karega
     document.getElementById('dashboard').innerHTML = `<div class="error"><h2>Oops!</h2><p>${message}</p></div>`;
 }
 
 function getCurrentLocation() {
     showLoading();
+    //naviagator.geolocation browser ka built in api hai
+    //it checks whether browser allows to access the current location
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
+            //location mil gyi to weather api call karo
             pos => getWeatherByCoords(pos.coords.latitude, pos.coords.longitude),
             () => displayError('Unable to access your location. Please enter a city.')
         );
@@ -156,9 +167,11 @@ function showLoading() {
             <p>Loading weather data...</p>
         </div>`;
 }
+//jaise hi page load hota hai user ki current loacation se data fetch hota hai
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('cityInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') searchCity();
     });
     getCurrentLocation();
 });
+
