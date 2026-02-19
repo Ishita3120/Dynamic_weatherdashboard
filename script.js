@@ -68,7 +68,7 @@ function getWeatherDescription(weatherCode, isDay) {
         81: { description: 'Moderate rain showers', icon: '🌧️' },
         82: { description: 'Violent rain showers', icon: '⛈️' },
         85: { description: 'Slight snow showers', icon: '🌨️' },
-        86: { description: 'Heavy snow showers', icon: '❄️' },
+        86: { descripticurrent : 'Heavy snow showers', icon: '❄️' },
         95: { description: 'Thunderstorm', icon: '⛈️' },
         96: { description: 'Thunderstorm w/ slight hail', icon: '⛈️' },
         99: { description: 'Thunderstorm w/ heavy hail', icon: '⛈️' }
@@ -77,13 +77,15 @@ function getWeatherDescription(weatherCode, isDay) {
 }
 
 function displayWeatherData(data, cityName, country) {
-    const current = data.current;
-    const daily = data.daily;
-    const weatherInfo = getWeatherDescription(current.weather_code, current.is_day);
-
+    const current = data.current;//current mein current weather details store kr rhi ho
+    const daily = data.daily;//forecast data store kr rhi ho
+    const weatherInfo = getWeatherDescription(current.weather_code, current.is_day);//readable description +emoji conversion
+//dynamic page hai jo baad mein dashboard mein integrate hoga
+    //math.round->is for a cleaner ui
+    //'-' ye show kr rha hai agar value null ya undefined hai to dash show karo
     let dashboardHTML = `
         <div class="weather-header">
-            <h1>${cityName}</h1>
+            <h1>${cityName}</h1>  
             <div class="location">${country}</div>
         </div>
         <div class="weather-main">
@@ -174,4 +176,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     getCurrentLocation();
 });
+
 
